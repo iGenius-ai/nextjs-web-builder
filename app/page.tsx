@@ -5,12 +5,16 @@ import { Button } from '@/components/ui/button'
 import { useTemplateGeneration } from '@/hooks/useTemplateGeneration'
 import dynamic from 'next/dynamic'
 import type { ComponentType, JSX } from 'react'
-import type { TemplateResponse, TemplatePrompt, TemplateComponent } from '@/hooks/useTemplateGeneration'
+import type { TemplateComponent, TemplateResponse } from '@/hooks/useTemplateGeneration'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const componentMap: Record<TemplateComponent['type'], ComponentType<any>> = {
   Hero: dynamic(() => import('@/components/templates/Hero').then(mod => mod.Hero), { ssr: false }),
-  Features: dynamic(() => import('@/components/templates/Features').then(mod => mod.Features), { ssr: false })
+  Features: dynamic(() => import('@/components/templates/Features').then(mod => mod.Features), { ssr: false }),
+  Navigation: dynamic(() => import('@/components/templates/Navigation').then(mod => mod.Navigation), { ssr: false }),
+  Pricing: dynamic(() => import('@/components/templates/Pricing').then(mod => mod.Pricing), { ssr: false }),
+  Testimonials: dynamic(() => import('@/components/templates/Testimonials').then(mod => mod.Testimonials), { ssr: false }),
+  Blog: dynamic(() => import('@/components/templates/Blog').then(mod => mod.Blog), { ssr: false })
 }
 
 export default function Home(): JSX.Element {
@@ -18,18 +22,7 @@ export default function Home(): JSX.Element {
   const { generateTemplate, loading, error } = useTemplateGeneration()
 
   async function handleGenerate(): Promise<void> {
-    const prompt: TemplatePrompt = {
-      title: 'My Website',
-      subtitle: 'Built with AI',
-      cta: 'Get Started',
-      features: [
-        { title: 'AI-Powered', description: 'Smart templates' },
-        { title: 'Responsive', description: 'Works everywhere' },
-        { title: 'Fast', description: 'Lightning quick' }
-      ]
-    }
-
-    const result = await generateTemplate(prompt)
+    const result = await generateTemplate({}) // Empty prompt will use defaults from template-api.ts
     if (result) setTemplate(result)
   }
 

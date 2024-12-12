@@ -2,17 +2,67 @@
 import { useState } from 'react'
 
 export interface TemplatePrompt {
-  title?: string
-  subtitle?: string
-  cta?: string
+  hero?: {
+    title?: string
+    subtitle?: string
+    cta?: string
+    backgroundImage?: string
+  }
   features?: Array<{
     title: string
     description: string
+    icon: string
   }>
+  pricing?: Array<{
+    title: string
+    price: string
+  }>
+  testimonials?: Array<{
+    author: string
+    title: string
+    content: string
+  }>
+  blog?: Array<{
+    id: number  
+    title: string
+    excerpt: string
+    image: string
+  }>
+  navigation?: {
+    logo: string
+    links: Array<{
+      href: string
+      text: string
+    }>
+    buttonText: string
+  }
+  contact?: {
+    title: string
+    fields: Array<{
+      name: string
+      label: string
+      type: string
+    }>
+  }
+  footer?: {
+    columns: Array<{
+      title: string
+      links: Array<{
+        text: string
+        href: string
+      }>
+    }>
+    social: Array<{
+      platform: string
+      href: string
+      icon: string
+    }>
+    copyright: string
+  }
 }
 
 export interface TemplateComponent {
-  type: 'Hero' | 'Features'
+  type: 'Hero' | 'Features' | 'Navigation' | 'Pricing' | 'Testimonials' | 'Blog'
   props: Record<string, unknown>
 }
 
